@@ -1,0 +1,101 @@
+### ==========================================
+### CMS API - File Endpoints Testing
+### ==========================================
+### Instructions:
+### 1. Make sure server is running: npm run start:dev
+### 2. Click "Send Request"
+### 3. View response in the panel that appears
+### ==========================================
+
+### Variables
+@baseUrl = http://localhost:3000
+@userId = 612394ff-8bb0-4879-b3fa-590702b9eea4
+@fileId = 906c197c-22b5-498c-b121-18a3ccc93149
+@status = Ready
+
+### ==========================================
+### TEST 1: Get All Files
+### ==========================================
+GET {{baseUrl}}/users/{{userId}}/files
+
+### Expected Response:
+### - Status: 200 OK
+### - Body: Array of file objects
+
+###
+
+### Expected Response:
+### - Status: 201 Created
+### - Body: Created file object with ID
+
+###
+
+### ==========================================
+### TEST 2: Get Specific File by ID
+### ==========================================
+### Update @fileId at top
+GET {{baseUrl}}/users/{{userId}}/files/{{fileId}}
+
+### Expected Response:
+### - Status: 200 OK
+### - Body: Single file object
+
+###
+
+### ==========================================
+### TEST 3: Get Download Url 
+### ==========================================
+### Update @fileId at top
+GET {{baseUrl}}/users/{{userId}}/files/download/{{fileId}}
+
+### Expected Response:
+### - Status: 200 OK
+### - Body: Single file object
+
+###
+
+### ==========================================
+### TEST 3: Delete File by ID
+### ==========================================
+### Update @fileId at top
+DELETE {{baseUrl}}/users/{{userId}}/files/delete/{{fileId}}
+
+### Expected Response:
+### - Status: 200 OK
+
+###
+
+### ==========================================
+### TEST 4: Update File Status To READY
+### ==========================================
+PATCH {{baseUrl}}/users/{{userId}}/files/{{fileId}}/status/{{status}}
+
+### Expected Response:
+### - Status: 200 OK
+### - Body: Single file object
+
+###
+
+###====================
+### AUTHENTICATION
+###====================
+
+### Register new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "carl@example.com",
+  "password": "password123",
+  "name": "Carl Beullens"
+}
+
+### Login with newly registered user
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carl@example.com",
+  "password": "password123"
+}
+
