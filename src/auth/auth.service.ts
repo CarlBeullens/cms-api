@@ -87,10 +87,9 @@ export class AuthService {
   private async generateToken(userId: string, email: string) : Promise<string> {
 
     const payload = { sub: userId, email: email };
-    const secret = this.configService.get<string>('JWT_SECRET');
-    const expiresIn = this.configService.get<number>('JWT_EXPIRATION_IN_HOURS');
 
-    const token = await this.jwtService.signAsync(payload, { secret, expiresIn });
+    // Secret and expiresIn are now configured at module level in auth.module.ts
+    const token = await this.jwtService.signAsync(payload);
 
     return token;
   }
