@@ -22,17 +22,17 @@ curl -X POST http://localhost:3000/users/612394ff-8bb0-4879-b3fa-590702b9eea4/fi
   -F "file=@$HOME/Desktop/Carl Beullens - Backend Developer.pdf" \
   | jq '.'
 
-# 4. Get specific file (replace FILE_ID)
-curl -X GET http://localhost:3000/users/5fbe90c4-fb91-481c-bf3f-68bb59297a37/files/FILE_ID \
+# 4. Get specific file
+curl -X GET http://localhost:3000/users/612394ff-8bb0-4879-b3fa-590702b9eea4/files/5af283e6-370f-4b2b-93f0-43b318a0c77d \
   -H "Authorization: Bearer $TOKEN" \
   | jq '.'
 
-# 5. Get download URL (replace FILE_ID)
-curl -X GET http://localhost:3000/users/5fbe90c4-fb91-481c-bf3f-68bb59297a37/files/FILE_ID/download-url \
+# 5. Get download URL
+curl -X GET http://localhost:3000/users/612394ff-8bb0-4879-b3fa-590702b9eea4/files/download/5af283e6-370f-4b2b-93f0-43b318a0c77d \
   -H "Authorization: Bearer $TOKEN" \
   | jq '.'
 
-# 6. Delete file (replace FILE_ID)
+# 6. Delete file
 curl -X DELETE http://localhost:3000/users/5fbe90c4-fb91-481c-bf3f-68bb59297a37/files/FILE_ID \
   -H "Authorization: Bearer $TOKEN" \
   -w "\nHTTP Status: %{http_code}\n"

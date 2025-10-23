@@ -4,14 +4,34 @@ import { AppService } from './app.service';
 import { FileModule } from './file/file.module';
 import { StorageModule } from './storage/storage.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProcessingModule } from './processing/processing.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-    FileModule, 
-    StorageModule, 
-    StorageModule, AuthModule
+    // Global Configuration
+    ConfigModule.forRoot({ 
+      isGlobal: true, 
+      envFilePath: '.env' 
+    }),
+    
+    // Infrastructure
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get<string>('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+        },
+      }),
+    }),
+    
+    // Feature Modules
+    AuthModule,
+    StorageModule,
+    FileModule,
+    ProcessingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
